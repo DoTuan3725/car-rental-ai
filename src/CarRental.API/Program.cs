@@ -1,5 +1,6 @@
 using CarRental.Application.Common;
 using CarRental.Application.Modules.Cars;
+using CarRental.Infrastructure.Persistence.Repository;
 using CarRental.Application.Modules.Customers;
 using CarRental.Infrastructure.Files;
 using CarRental.Infrastructure.Persistance;
@@ -59,8 +60,8 @@ builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 
 // --- Dependency Injection: Car ---
-//builder.Services.AddScoped<ICarRepository, CarRepository>();
-//builder.Services.AddScoped<ICarService, CarService>();
+builder.Services.AddScoped<ICarRepository, CarRepository>();
+builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddScoped<IFileStorageService, LocalFileStorageService>();
 
 // --- Unit of work ---
