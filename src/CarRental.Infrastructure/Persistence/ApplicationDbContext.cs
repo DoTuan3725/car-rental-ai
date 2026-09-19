@@ -13,5 +13,22 @@ public class ApplicationDbContext : DbContext, IUnitOfWork
     public DbSet<CustomerEntity> Customers => Set<CustomerEntity>();
     public DbSet<CarEntity> Cars => Set<CarEntity>();
     public DbSet<CarImageEntity> CarImages => Set<CarImageEntity>();
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<CustomerEntity>()
+            .HasIndex(c => c.Email)
+            .IsUnique();
+
+        modelBuilder.Entity<CustomerEntity>()
+            .HasIndex(c => c.PhoneNumber)
+            .IsUnique();
+
+        modelBuilder.Entity<CarEntity>()
+            .HasIndex(c => c.LicensePlate)
+            .IsUnique();
+    }
     // DbSet<Booking>, DbSet<Payment>, DbSet<ReturnRecord> thêm khi làm tới module đó
 }
