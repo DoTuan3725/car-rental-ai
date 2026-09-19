@@ -1,5 +1,7 @@
 using CarRental.Application.Modules.Customers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace CarRental.API.Controllers;
 
@@ -17,4 +19,14 @@ public class AuthController : ControllerBase
     [HttpPost("login")]
     public async Task<ActionResult<AuthResponse>> Login(LoginRequest request)
         => Ok(await _customerService.LoginAsync(request));
+
+    [Authorize]
+    [HttpPut("me")]
+    public async Task<IActionResult> UpdateProfile(UpdateProfileRequest request)
+    {
+        var customerId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value
+            ?? User.FindFirst("sub")!.Value);
+        await _customerService.UpdateProfileAsync(customerId, request);
+        return NoContent();
+    }
 }
