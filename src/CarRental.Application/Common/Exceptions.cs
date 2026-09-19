@@ -7,7 +7,10 @@ public class NotFoundException : Exception
 
 public class ConflictException : Exception
 {
-    public ConflictException(string message) : base(message) { }
+    public string Code { get; }
+
+    public ConflictException(string code, string message) : base(message)
+        => Code = code;
 }
 
 public class ValidationAppException : Exception

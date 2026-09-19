@@ -27,7 +27,10 @@ public class CustomerService : ICustomerService
     public async Task<AuthResponse> RegisterAsync(RegisterRequest request)
     {
         if (await _customerRepository.GetByEmailAsync(request.Email) is not null)
-            throw new ConflictException("Email đã được sử dụng.");
+            throw new ConflictException("EMAIL_EXISTS", "Email đã được sử dụng.");
+
+        if (await _customerRepository.GetByPhoneNumberAsync(request.PhoneNumber) is not null)
+            throw new ConflictException("PHONE_EXISTS", "Số điện thoại đã được sử dụng.");
 
         var customer = new CustomerEntity
         {
@@ -62,6 +65,19 @@ public class CustomerService : ICustomerService
         var customer = await _customerRepository.GetByIdAsync(id);
         return customer is null
             ? null
-            : new CustomerDto(customer.Id, customer.FullName, customer.Email, customer.PhoneNumber, customer.Role.ToString());
+            : new CustomerDto(customer.Id, customer.FullName, customer.Email, customer.PhoneNumber, customer.Role.ToString(), customer.IdentityNumber, customer.Address);
+    }
+
+    public async Task UpdateProfileAsync(int customerId, UpdateProfileRequest request)
+    {
+        var customer = await _customerRepository.GetByIdAsync(customerId)
+            ?? throw new NotFoundException("Không tìm thấy khách hàng.");
+
+        customer.FullName = request.FullName;
+        customer.IdentityNumber = request.IdentityNumber;
+        customer.Address = request.Address;
+
+        // cần thêm Update(customer) vào ICustomerRepository nếu chưa có
+        await _unitOfWork.SaveChangesAsync();
     }
 }
