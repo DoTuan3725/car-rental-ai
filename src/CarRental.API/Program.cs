@@ -1,10 +1,10 @@
+using CarRental.API.Middleware;
 using CarRental.Application.Common;
 using CarRental.Application.Modules.Cars;
-using CarRental.Infrastructure.Persistence.Repository;
 using CarRental.Application.Modules.Customers;
 using CarRental.Infrastructure.Files;
-using CarRental.Infrastructure.Persistance;
-using CarRental.Infrastructure.Persistance.Repositories;
+using CarRental.Infrastructure.Persistence;
+using CarRental.Infrastructure.Persistence.Repository;
 using CarRental.Infrastructure.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Cors.Infrastructure;
@@ -90,6 +90,8 @@ app.Use(async (context, next) =>
 });
 
 app.UseStaticFiles(); // để client tải được ảnh xe qua /uploads/cars/...
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseAuthentication();
 app.UseAuthorization();
