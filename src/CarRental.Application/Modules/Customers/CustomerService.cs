@@ -26,7 +26,9 @@ public class CustomerService : ICustomerService
 
     public async Task<AuthResponse> RegisterAsync(RegisterRequest request)
     {
-        if (await _customerRepository.GetByEmailAsync(request.Email) is not null)
+        var normalizedEmail = request.Email.Trim().ToLowerInvariant();
+
+        if (await _customerRepository.GetByEmailAsync(normalizedEmail) is not null)
             throw new ConflictException("EMAIL_EXISTS", "Email đã được sử dụng.");
 
         if (await _customerRepository.GetByPhoneNumberAsync(request.PhoneNumber) is not null)
@@ -35,7 +37,7 @@ public class CustomerService : ICustomerService
         var customer = new CustomerEntity
         {
             FullName = request.FullName,
-            Email = request.Email,
+            Email = normalizedEmail,
             PhoneNumber = request.PhoneNumber,
             PasswordHash = _passwordHasher.Hash(request.Password),
             Role = UserRole.Customer
@@ -50,11 +52,13 @@ public class CustomerService : ICustomerService
 
     public async Task<AuthResponse> LoginAsync(LoginRequest request)
     {
-        var customer = await _customerRepository.GetByEmailAsync(request.Email)
-            ?? throw new UnauthorizedAccessException("Email hoặc mật khẩu không đúng.");
+        var normalizedEmail = request.Email.Trim().ToLowerInvariant();
+
+        var customer = await _customerRepository.GetByEmailAsync(normalizedEmail)
+            ?? throw new UnauthorizedException("Email hoặc mật khẩu không đúng.");
 
         if (!_passwordHasher.Verify(request.Password, customer.PasswordHash))
-            throw new UnauthorizedAccessException("Email hoặc mật khẩu không đúng.");
+            throw new UnauthorizedException("Email hoặc mật khẩu không đúng.");
 
         var token = _jwtTokenGenerator.GenerateToken(customer);
         return new AuthResponse(token, customer.FullName, customer.Role.ToString());
