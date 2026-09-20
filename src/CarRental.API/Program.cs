@@ -15,6 +15,8 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
+builder.Services.AddControllers();
+
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
@@ -87,8 +89,17 @@ app.Use(async (context, next) =>
     await next();
 });
 
+app.UseStaticFiles(); // để client tải được ảnh xe qua /uploads/cars/...
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapControllers();
+
 var health = () => Results.Ok(new { status = "ok", service = "CarRental.API" });
 app.MapGet("/health", health);
 app.MapGet("/api/health", health);
 
 app.Run();
+
+public partial class Program { } // để CustomWebApplicationFactory<Program> dùng được ở Module 7 (integration test)
