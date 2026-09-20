@@ -1,3 +1,4 @@
+
 using Microsoft.AspNetCore.Http;
 
 namespace CarRental.Application.Modules.Cars;
@@ -12,3 +13,4 @@ public interface ICarService
     Task<CarImageDto> AddImageAsync(int carId, IFormFile file);
     Task SetPrimaryImageAsync(int carId, int imageId);
 }
+

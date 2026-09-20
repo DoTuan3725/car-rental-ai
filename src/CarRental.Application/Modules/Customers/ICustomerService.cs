@@ -8,3 +8,4 @@ public interface ICustomerService
     Task<CustomerDto?> GetByIdAsync(int id);
     Task UpdateProfileAsync(int customerId, UpdateProfileRequest request);
 }
+
