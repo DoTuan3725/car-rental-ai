@@ -20,7 +20,7 @@ namespace CarRental.Infrastructure.Migrations
                     CarType = table.Column<int>(type: "int", nullable: false),
                     Brand = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Model = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LicensePlate = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LicensePlate = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Seats = table.Column<int>(type: "int", nullable: false),
                     CarAgeYears = table.Column<int>(type: "int", nullable: false),
                     BasePricePerDay = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -43,8 +43,8 @@ namespace CarRental.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Role = table.Column<int>(type: "int", nullable: false),
                     IdentityNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -191,6 +191,24 @@ namespace CarRental.Infrastructure.Migrations
                 name: "IX_CarImages_CarId",
                 table: "CarImages",
                 column: "CarId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cars_LicensePlate",
+                table: "Cars",
+                column: "LicensePlate",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Customers_Email",
+                table: "Customers",
+                column: "Email",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Customers_PhoneNumber",
+                table: "Customers",
+                column: "PhoneNumber",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Payment_BookingId",
