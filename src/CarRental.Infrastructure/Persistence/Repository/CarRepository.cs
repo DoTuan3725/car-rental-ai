@@ -1,5 +1,5 @@
 using CarRental.Application.Modules.Cars;
-using CarRental.Infrastructure.Persistance;
+using CarRental.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using CarEntity = CarRental.Domain.Modules.Cars.Car;
 

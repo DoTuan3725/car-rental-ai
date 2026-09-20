@@ -2,7 +2,7 @@ using CarRental.Application.Modules.Customers;
 using Microsoft.EntityFrameworkCore;
 using CustomerEntity = CarRental.Domain.Modules.Customers.Customer;
 
-namespace CarRental.Infrastructure.Persistance.Repositories;
+namespace CarRental.Infrastructure.Persistence.Repository;
 
 public class CustomerRepository : ICustomerRepository
 {
