@@ -4,7 +4,7 @@ using CustomerEntity = CarRental.Domain.Modules.Customers.Customer;
 using CarEntity = CarRental.Domain.Modules.Cars.Car;
 using CarImageEntity = CarRental.Domain.Modules.Cars.CarImage;
 
-namespace CarRental.Infrastructure.Persistance;
+namespace CarRental.Infrastructure.Persistence;
 
 public class ApplicationDbContext : DbContext, IUnitOfWork
 {
