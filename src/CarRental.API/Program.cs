@@ -14,6 +14,9 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.Configure<MinioSettings>(
+    builder.Configuration.GetSection(MinioSettings.SectionName));
+builder.Services.AddScoped<IFileStorageService, MinioFileStorageService>();
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 
