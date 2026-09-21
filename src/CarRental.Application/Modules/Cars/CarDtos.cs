@@ -33,6 +33,7 @@ public record UpdateCarRequest(
     CarType CarType,
     string Brand,
     string Model,
+    string LicensePlate,
     int Seats,
     int CarAgeYears,
     decimal BasePricePerDay,

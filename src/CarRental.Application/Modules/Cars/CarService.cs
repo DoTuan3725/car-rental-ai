@@ -59,6 +59,11 @@ public class CarService : ICarService
         var car = await _carRepository.GetByIdAsync(id)
             ?? throw new NotFoundException("Không tìm thấy xe.");
 
+        var duplicate = await _carRepository.GetByLicensePlateAsync(request.LicensePlate);
+        if (duplicate is not null && duplicate.Id != id)
+            throw new ConflictException("PLATE_EXISTS", $"Biển số '{request.LicensePlate}' đã tồn tại.");
+
+        car.LicensePlate = request.LicensePlate;
         car.CarType = request.CarType;
         car.Brand = request.Brand;
         car.Model = request.Model;
