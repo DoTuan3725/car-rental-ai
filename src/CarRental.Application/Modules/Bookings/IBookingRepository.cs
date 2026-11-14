@@ -9,4 +9,7 @@ public interface IBookingRepository
     Task<bool> HasOverlapAsync(int carId, DateTime startDate, DateTime endDate, int? excludeBookingId = null);
     Task AddAsync(Booking booking);
     void Update(Booking booking);
+    Task<Payment?> GetPaymentByIdAsync(int id);
+    Task AddPaymentAsync(Payment payment);
+    Task AddReturnRecordAsync(ReturnRecord record);
 }
