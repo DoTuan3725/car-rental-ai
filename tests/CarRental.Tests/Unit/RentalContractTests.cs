@@ -205,6 +205,8 @@ public sealed class RentalContractTests
         public Task<BookingDto> GetByIdAsync(int id, int? customerId = null) => throw new NotImplementedException();
         public Task<BookingDto> ConfirmAsync(int id) => throw new NotImplementedException();
         public Task<BookingDto> CancelAsync(int id, string? reason) => throw new NotImplementedException();
+        public Task<BookingEstimateDto> EstimateAsync(EstimateBookingRequest request) => throw new NotImplementedException();
+        public Task<List<BookedRangeDto>> GetBookedRangesAsync(int carId) => throw new NotImplementedException();
     }
 
     private sealed class FakeRepo(Booking? b) : IBookingRepository
